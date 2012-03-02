@@ -29,64 +29,6 @@ class TestPythonSDK(unittest.TestCase):
         self.assertEqual(s.session_id, xml.getElementsByTagName('session_id')[0].childNodes[0].data, \
             "Python SDK tests: Session id not found")
 
-    def test_num_output_streams(self):
-        s = self.o.create_session('127.0.0.1', properties={"multiplexer.numOutputStreams": 0})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('0', xml.getElementsByTagName('numOutputStreams')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.numOutputStreams not set to 0')
-
-        s = self.o.create_session('127.0.0.1', properties = {"multiplexer.numOutputStreams": 1})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('1', xml.getElementsByTagName('numOutputStreams')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.numOutputStreams not set to 1')
-
-        s = self.o.create_session('127.0.0.1', properties = {"multiplexer.numOutputStreams": 5})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('5', xml.getElementsByTagName('numOutputStreams')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.numOutputStreams not set to 5')
-
-        s = self.o.create_session('127.0.0.1', properties = {"multiplexer.numOutputStreams": 100})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('100', xml.getElementsByTagName('numOutputStreams')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.numOutputStreams not set to 100')
-
-        s = self.o.create_session('127.0.0.1')
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual([], xml.getElementsByTagName('numOutputStreams'),
-            'Python SDK tests: multiplexer.numOutputStreams should not be set')
-
-    def test_switch_type(self):
-        s = self.o.create_session(properties = {"multiplexer.switchType":  0})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('0', xml.getElementsByTagName('switchType')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.switchType not 0')
-
-        s = self.o.create_session(properties = {"multiplexer.switchType":  1})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('1', xml.getElementsByTagName('switchType')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.switchType not 1')
-
-        s = self.o.create_session()
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual([], xml.getElementsByTagName('switchType'),
-            'Python SDK tests: multiplexer.switchType should not be set')
-
-    def test_switch_timeout(self):
-        s = self.o.create_session(properties = {"multiplexer.switchTimeout": 1200})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('1200', xml.getElementsByTagName('switchTimeout')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.switchTimeout not properly set (should be 1200)')
-
-        s = self.o.create_session(properties = {"multiplexer.switchTimeout": 2000})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('2000', xml.getElementsByTagName('switchTimeout')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.switchTimeout not properly set (should be 2000)')
-
-        s = self.o.create_session(properties = {"multiplexer.switchTimeout": 100000})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('100000', xml.getElementsByTagName('switchTimeout')[0].childNodes[0].data, \
-            'Python SDK tests: multiplexer.switchType not properly set (should be 100000)')
-
     def test_p2p_preference(self):
         s = self.o.create_session(properties = {"p2p.preference": 'enabled'})
         xml = self.get_session_info(s.session_id)
@@ -97,17 +39,6 @@ class TestPythonSDK(unittest.TestCase):
         xml = self.get_session_info(s.session_id)
         self.assertEqual('disabled', xml.getElementsByTagName('preference')[0].childNodes[0].data, \
             'Python SDK tests: multiplexer.p2p_preference not disabled')
-
-    def test_echo_suppression(self):
-        s = self.o.create_session(properties = {"echoSuppression.enabled": 'true'})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('True', xml.getElementsByTagName('enabled')[0].childNodes[0].data, \
-            'Python SDK tests: echo suppression not showing enabled')
-
-        s = self.o.create_session(properties = {"echoSuppression.enabled": 'false'})
-        xml = self.get_session_info(s.session_id)
-        self.assertEqual('False', xml.getElementsByTagName('enabled')[0].childNodes[0].data, \
-            'Python SDK tests: echo suppression not showing disabled')
 
     def test_roles(self):
         s = self.o.create_session()

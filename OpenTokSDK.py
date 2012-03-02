@@ -40,18 +40,10 @@ class AuthError(OpenTokException):
 
 
 class SessionProperties(object):
-    echoSuppression_enabled = None
-    multiplexer_numOutputStreams = None
-    multiplexer_switchType = None
-    multiplexer_switchTimeout = None
     p2p_preference = None
 
     def __iter__(self):
         d = {
-            'echoSuppression.enabled': self.echoSuppression_enabled,
-            'multiplexer.numOutputStreams': self.multiplexer_numOutputStreams,
-            'multiplexer.switchType': self.multiplexer_switchType,
-            'multiplexer.switchTimeout': self.multiplexer_switchTimeout,
             'p2p.preference': self.p2p_preference,
         }
         return d.iteritems()
